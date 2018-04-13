@@ -1,0 +1,11 @@
+{
+  "name": "cache-flex",
+  "version": "1.0.0",
+  "description": "An in-memory cache with a little more options for control and flexibility.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Irtaza Abbas",
+  "license": "ISC"
+}
