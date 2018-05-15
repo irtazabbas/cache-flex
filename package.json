@@ -12,5 +12,13 @@
     "node",
     "cache",
     "in-memory"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irtazabbas/cache-flex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/irtazabbas/cache-flex/issues"
+  },
+  "homepage": "https://github.com/irtazabbas/cache-flex#readme"
 }
