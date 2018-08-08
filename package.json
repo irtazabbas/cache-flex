@@ -1,6 +1,6 @@
 {
   "name": "cache-flex",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "An in-memory cache with a little more options for control and flexibility.",
   "main": "index.js",
   "scripts": {
