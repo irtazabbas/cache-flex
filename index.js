@@ -58,6 +58,17 @@ const setConstant = function(key, value) {
   });
 };
 
+
+const setFixType = function(key, value) {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(setFixTypeSync(key, value));
+    } catch (exc) {
+      reject(exc);
+    }
+  });
+};
+
 /**
  * ====== SYNCHRONOUS METHODS ======
  */
@@ -123,6 +134,11 @@ const setConstantSync = function(key, value) {
   return setSync(key, value, null, true);
 };
 
+
+const setFixTypeSync = function(key, value) {
+  return setSync(key, value, true);
+};
+
 /**
  * ===== HELPER METHODS =====
  */
@@ -178,5 +194,7 @@ module.exports = {
   setOrUpdate,
   setOrUpdateSync,
   setConstant,
-  setConstantSync
+  setConstantSync,
+  setFixType,
+  setFixTypeSync
 };
