@@ -100,6 +100,9 @@ const getSync = function(key) {
   return cache.get(key);
 };
 
+/**
+ * ===== HELPER METHODS =====
+ */
 
 const checkKey = function(key) {
   if (typeof key !== 'string') {
@@ -133,6 +136,10 @@ const checkIfUpdatable = function(key, value) {
     throw new Error(`"${key}" cannot be updated with the provided value type.`);
   }
 }
+
+/**
+ * ===== EXPORTS =====
+ */
 
 module.exports = {
   set,
