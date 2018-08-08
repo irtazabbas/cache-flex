@@ -45,7 +45,7 @@ const get = function(key) {
       reject(exc);
     }
   });
-}
+};
 
 
 const setConstant = function(key, value) {
@@ -157,10 +157,12 @@ const checkIfUpdatable = function(key, value) {
 
   if (constants.indexOf('key') !== -1) {
     throw new Error(`"${key}" is constant and can not be updated.`);
-  } else if (fixedTypeOnes.has(key) && typeof value !== fixedTypeOnes.get(key)) {
+  } else if (
+    fixedTypeOnes.has(key) && typeof value !== fixedTypeOnes.get(key)
+  ) {
     throw new Error(`"${key}" cannot be updated with the provided value type.`);
   }
-}
+};
 
 /**
  * ===== EXPORTS =====
