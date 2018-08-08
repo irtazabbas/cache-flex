@@ -1,4 +1,3 @@
-const Promise = require('bluebird');
 
 const cache = new Map();
 const fixedTypeOnes = new Map();
