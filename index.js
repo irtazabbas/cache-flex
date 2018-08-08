@@ -58,6 +58,9 @@ const setConstant = function(key, value) {
   });
 };
 
+/**
+ * ====== SYNCHRONOUS METHODS ======
+ */
 
 const setSync = function(key, value, fixType, makeConstant) {
   checkKey(key);
