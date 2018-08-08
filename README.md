@@ -1,17 +1,16 @@
 ## Cache flex
-An in-memory cache with a little more options for control and flexibility.
+An in-memory cache with extra options to fix value types and set constants in cache, for more consistency.
 
 ### Methods
 
 #### *.set(key, value)*
-- `fixType` if true fixes the type for the `value` against the given `key`, and
-can be only updated with a `value` with same type as inital type of `value`.
 - `value` can be anything except for undefined, null or NaN.
 - Returns a **promise** that resolves with the set value.
 - ***.setSync(...)*** is the synchronous version with the same parameters, returns the value.
 
 #### *.setFixType(key, value)*
-- sets the value and fixes the type of the value i.e. the value can only be replaced with a value of same type as the original.
+- fixes the type for the `value` against the given `key`, and
+can be only updated with a `value` with same type as inital type of `value`.
 - Returns a **promise** that resolves with the set value.
 - ***.setFixTypeSync(...)*** is the synchronous version with the same parameters, returns the value.
 
