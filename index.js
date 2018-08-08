@@ -1,12 +1,13 @@
 
 const cache = new Map();
 const fixedTypeOnes = new Map();
+const constants = [];
 
 
-const set = function(key, value, fixType) {
+const set = function(key, value, fixType, makeConstant) {
   return new Promise((resolve, reject) => {
     try {
-      resolve(setSync(key, value, fixType));
+      resolve(setSync(key, value, fixType, makeConstant));
     } catch (exc) {
       reject(exc);
     }
@@ -47,10 +48,21 @@ const get = function(key) {
 }
 
 
-const setSync = function(key, value, fixType) {
+const setConstant = function(key, value) {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(setConstantSync(key, value));
+    } catch (exc) {
+      reject(exc);
+    }
+  });
+};
+
+
+const setSync = function(key, value, fixType, makeConstant) {
   checkKey(key);
   checkValue(value);
-
+  
   if (cache.has(key)) {
     throw new Error(
       `"${key}" is already defined, instead use 'update' or 'setOrUpdate'.`
@@ -59,7 +71,11 @@ const setSync = function(key, value, fixType) {
 
   cache.set(key, value);
 
-  if (fixType === true) fixedTypeOnes.set(key, typeof value);
+  if (makeConstant === true) {
+    constants.push(key);
+  } else if (fixType === true) {
+    fixedTypeOnes.set(key, typeof value);
+  }
 
   return value;
 };
@@ -99,6 +115,11 @@ const getSync = function(key) {
   return cache.get(key);
 };
 
+
+const setConstantSync = function(key, value) {
+  return setSync(key, value, null, true);
+};
+
 /**
  * ===== HELPER METHODS =====
  */
@@ -131,7 +152,9 @@ const checkIfUpdatable = function(key, value) {
   checkKey(key);
   checkValue(value);
 
-  if (fixedTypeOnes.has(key) && typeof value !== fixedTypeOnes.get(key)) {
+  if (constants.indexOf('key') !== -1) {
+    throw new Error(`"${key}" is constant and can not be updated.`);
+  } else if (fixedTypeOnes.has(key) && typeof value !== fixedTypeOnes.get(key)) {
     throw new Error(`"${key}" cannot be updated with the provided value type.`);
   }
 }
@@ -148,5 +171,7 @@ module.exports = {
   update,
   updateSync,
   setOrUpdate,
-  setOrUpdateSync
+  setOrUpdateSync,
+  setConstant,
+  setConstantSync
 };
