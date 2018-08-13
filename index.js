@@ -69,6 +69,17 @@ const setFixType = function(key, value) {
   });
 };
 
+
+const unset = function(key) {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(unsetSync(key));
+    } catch (exc) {
+      reject(exc);
+    }
+  });
+};
+
 /**
  * ====== SYNCHRONOUS METHODS ======
  */
@@ -139,6 +150,19 @@ const setFixTypeSync = function(key, value) {
   return setSync(key, value, true);
 };
 
+
+const unsetSync = function(key) {
+  if (isConstant(key)) {
+    throw new Error(`"${key}" cannot be unset as it is a constant.`);
+  }
+
+  if (isFixedType(key)) {
+    throw new Error(`"${key}" cannot be unset as it is a fixed type.`);
+  }
+
+  return cache.delete(key);
+};
+
 /**
  * ===== HELPER METHODS =====
  */
@@ -199,5 +223,7 @@ module.exports = {
   setConstant,
   setConstantSync,
   setFixType,
-  setFixTypeSync
+  setFixTypeSync,
+  unset,
+  unsetSync
 };
