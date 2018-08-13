@@ -171,14 +171,17 @@ const checkIfUpdatable = function(key, value) {
   checkKey(key);
   checkValue(value);
 
-  if (constants.indexOf(key) !== -1) {
+  if (isConstant(key)) {
     throw new Error(`"${key}" is constant and can not be updated.`);
   } else if (
-    fixedTypeOnes.has(key) && typeof value !== fixedTypeOnes.get(key)
+    isFixedType(key) && typeof value !== fixedTypeOnes.get(key)
   ) {
     throw new Error(`"${key}" cannot be updated with the provided value type.`);
   }
 };
+
+const isConstant = key => constants.indexOf(key) !== -1;
+const isFixedType = key => fixedTypeOnes.has(key);
 
 /**
  * ===== EXPORTS =====
