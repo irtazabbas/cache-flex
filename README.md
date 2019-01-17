@@ -3,9 +3,15 @@ An in-memory cache with extra options to fix value types and set constants in ca
 
 ### Methods
 
-#### *.set(key, value)*
-- `value` can be anything except for undefined, null or NaN.
+#### *.set(key, value, options)*
 - Returns a **promise** that resolves with the set value.
+- `key` should be a string.
+- `value` can be anything except for `undefined`, `null` or `NaN`.
+- `options` (*object*)
+  - `makeConstant` (*boolean*): if set to `true`, does not allow the value to be updated.
+  - `fixType` (*boolean*): if set to `true`, does not allow the type of the value to be changed.
+  - `ttl` (*number*) (time in milliseconds): if specified, removes the value after the given interval.
+  - `expiryCallback(value)` (*function*): if provided with valid `ttl`, this function gets called right after a value is expired with the value.
 - ***.setSync(...)*** is the synchronous version with the same parameters, returns the value.
 
 #### *.setFixType(key, value)*

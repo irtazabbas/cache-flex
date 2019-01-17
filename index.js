@@ -4,10 +4,10 @@ const fixedTypeOnes = new Map();
 const constants = [];
 
 
-const set = function(key, value, fixType, makeConstant) {
+const set = function(key, value, options) {
   return new Promise((resolve, reject) => {
     try {
-      resolve(setSync(key, value, fixType, makeConstant));
+      resolve(setSync(key, value, options));
     } catch (exc) {
       reject(exc);
     }
@@ -84,9 +84,24 @@ const unset = function(key) {
  * ====== SYNCHRONOUS METHODS ======
  */
 
-const setSync = function(key, value, fixType, makeConstant) {
+const setSync = function(key, value, options) {
   checkKey(key);
   checkValue(value);
+
+  const { makeConstant, fixType, ttl, expiryCallback } = options;
+
+  if (ttl && (typeof ttl !== 'number' || ttl <= 0) ) {
+  // if (!(ttl && typeof ttl === 'number' && ttl > 0)) {
+    throw new Error(
+      `Invalid "ttl" value "${ttl}". It should be a number greater than 0.`
+    );
+  }
+
+  if (expiryCallback && typeof expiryCallback !== 'function') {
+    throw new Error(
+      `Parameter "expiryCallback" if provided, should be a function.`
+    );
+  }
   
   if (cache.has(key)) {
     throw new Error(
@@ -100,6 +115,20 @@ const setSync = function(key, value, fixType, makeConstant) {
     constants.push(key);
   } else if (fixType === true) {
     fixedTypeOnes.set(key, typeof value);
+  }
+
+  if (ttl) {
+    setTimeout(() => {
+      let existingValue;
+
+      if (expiryCallback) {
+        existingValue = getSync(key);
+        unsetSync(key);
+        expiryCallback(existingValue);
+      } else {
+        unsetSync(key);
+      }
+    }, ttl);
   }
 
   return value;
