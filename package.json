@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/irtazabbas/cache-flex/issues"
   },
-  "homepage": "https://github.com/irtazabbas/cache-flex#readme"
+  "homepage": "https://github.com/irtazabbas/cache-flex#readme",
+  "devDependencies": {
+    "jasmine": "^3.3.1"
+  }
 }
